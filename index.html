@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+
+<title>Paulashes &#8211; Lash, Beauty &amp; Boutique</title>
+<link href="recursos/estilo.css" rel="stylesheet" type="text/css" />
+
+<script>
+
+function nav(){
+var es_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
+if(es_chrome == false ){
+                
+			    alert("Estimado usuario, el sistema funciona de mejor manera en el navegador Google Chrome, algunas caracteristicas pueden verse afectadas");
+}
+        }
+         
+</script>
+</head>
+
+<body onload="nav();">
+<div id="header">
+<center><img src="recursos/img/banner.jpg" width="1180" height="148"/></center> </div><br>
+<center>
+<div class="contenido1" >
+<center><h2>Lash, Beauty &amp; Boutique</h2></center><br>
+
+<table class="texto" width="500"  ><tr><td><center>
+<form role="form" action="recursos/controles/control_login.php" method="post" id="loginForm" name="loginForm">
+      <div id="usu">
+        <label for="correo" class="texto"> Correo </label><br />
+        <input type="text" name="mail" id="mail" class="form-control" style="width:300px" maxlength="50" required/>
+      </div><br />
+            <div id="cla">
+        <label for="clave"> Contraseña </label><br />
+        <input name="password" type="password" required class="form-control" id="password" maxlength="6" style="width:300px"/>
+      </div><br />
+              </br>
+      <center><input type="submit" value="Ingresar" id="btnAc" /></center>  
+      </form></center></td></tr></table>
+        <br /><br />
+       <center><div class="texto1" id="noc"><a href="recursos/paginas_usu/reestablecer.php">Restablecer contraseña</a><br /></div></center>
+</center>
+</div><br /><br /><br />
+<center><div id="footer" class="footer"></div></center>
+</div>
+</center>
+</body>
+</html>
