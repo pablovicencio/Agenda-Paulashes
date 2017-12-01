@@ -18,6 +18,7 @@ session_start();
 
 		$dao = new CitaDAO();
 		 $re = $dao->listar_citas($fecha);
+		 
 
 
           $horas = array();

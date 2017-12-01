@@ -64,9 +64,9 @@ public function getCita() {
         /*///////////////////////////////////////
         Listar Citas
         //////////////////////////////////////*/
-        public function listar_citas($fecha) {
+        public function listar_citas($fec) {
 
-            $this->fecha_cita = $fecha; 
+            $this->fecha_cita = $fec; 
 
             try{
                 
@@ -78,11 +78,14 @@ public function getCita() {
                         from citas a, clientes b, usuarios c, sucursales d, parametros e
                         where a.fk_id_cli = b.id_cli and a.fk_id_estilista = c.id_usu and a.fk_suc_cita = d.id_suc and d.vigencia_suc = 1
                         and a.estado_cita = e.cod_item and e.cod_grupo = 1 and e.vigencia = 1 
-                        and a.estado_cita <> 4 and  a.fec_cita = :fecha order by a.hora_cita,a.hora_ter_cita;";
+                        and a.estado_cita <> 4 and  a.fec_cita = :fecha order by a.hora_cita,a.hora_ter_cita";
 
                 $stmt = $pdo->prepare($sql_lista);
                 $stmt->bindParam("fecha", $this->fecha_cita, PDO::PARAM_STR);
                 $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
 
             } catch (Exception $e) {
                 echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/agenda.php';</script>"; 
