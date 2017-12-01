@@ -17,9 +17,9 @@ if( isset($_SESSION['id_usu']) ){
     //Si no lo redirige a la pagina index para que inicie la sesion 
     header("location: ../../index.html");
   }  
-  require_once '../db/pauDAO.php';
+  require_once '../clases/Funciones.php';
   
-  $dao = new pauDAO(); 
+  $fun = new Funciones(); 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,25 +44,6 @@ $('#logo').css('visibility','visible')
 
 
 </script>
-
-
-<style type="text/css">
-    * {
-        margin: 0px;
-        padding: 0px;
-    }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
-
-        body > header {
-            height: 20%;
-            min-height: 200px;
-        }
-
-</style>
 </head>
 
 <body>
@@ -92,7 +73,7 @@ $('#logo').css('visibility','visible')
 </label><br /><br />
 <hr><br><br>
 
-</left><form action="index_estilista.php" method="get">
+</left><form action="index_usuario.php" method="get">
 Fecha a consultar: <input type="date" name="fec">
 <input type="submit" value="Buscar">
 </form><br><br>
@@ -107,25 +88,40 @@ Fecha a consultar: <input type="date" name="fec">
     <td style="background:#74ccd1 ; color:black">HORA TERMINO</td>  
     <td style="background:#74ccd1 ; color:black">ESTADO</td>
     <td style="background:#74ccd1 ; color:black">UBICACION</td> 
+    <td style="background:#74ccd1 ; color:black">ESTILISTA</td> 
 </tr> 
 <?php
               
+              switch ($_SESSION['perfil']) {
+                case 1:
+                  $usuario = $us;
+                  break;
+
+                case 2:
+                  $usuario = 0;
+                  break;
+                
+                
+              }
               
-              $re = $dao->cargar_citas_est($us, date('Y-m-d', $dia));
+              $re = $fun->cargar_citas($usuario, date('Y-m-d', $dia));
+
+              
               foreach($re as $row){
 
                 $id_cita = $row['id_cita'];
                 $link = '<a href="atencion.php?dato='.$id_cita.'&dato2='.$row['nom_cli'].'" class="l">';
-                $estado = $row['est'];
-                $ce = $dao->colorestado($estado);
+                $estado = $row['estado'];
+                $ce = $fun->colorestado($estado);
                 
                 echo ('<td ><center>'.$link.'Actualizar</a></center></td>');
                 echo ('<td>'.$row['nom_cli'].'</td>');
                 echo ('<td>'.$row['fono_cli'].'</td>');
                 echo ('<td>'.$row['hora_cita'].'</td>');
-                echo ('<td>'.$row['hora_ter'].'</td>');
+                echo ('<td>'.$row['hora_ter_cita'].'</td>');
                 echo ($ce);
-                echo ('<td>'.$row['ubi'].'</td></tr>');
+                echo ('<td>'.$row['ubicacion'].'</td>');
+                echo ('<td bgcolor='.$row['color_usu'].'>'.$row['nom_usu'].'</td></tr>');
     
               }
 ?>

@@ -7,18 +7,23 @@ Clase Sucursal
 
 class SucursalDAO 
 {
-    private $id  ;
-    private $nombre ;
-    private $direccion ;
-    private $fono ;
-    private $vigencia ; 
+    private $id;
+    private $nombre;
+    private $direccion;
+    private $fono;
+    private $vigencia; 
 
-    public function __construct($nombre, $direccion, $fono, $vigencia) {
+    public function __construct($id=null,$nombre=null, $direccion=null, $fono=null, $vigencia=null) {
+        $this->id  = $id;
         $this->nombre  = $nombre;
         $this->direccion  = $direccion;
         $this->fono  = $fono;
         $this->vigencia  = $vigencia;
 }
+
+public function getSucursal() {
+    return $this->id;
+ }
 
    	/*///////////////////////////////////////
     Crear Sucursal
@@ -32,7 +37,7 @@ class SucursalDAO
 
                 $sql_crear_suc = "INSERT INTO `sucursales`(`nom_suc`,`dir_suc`,`fono_suc`,`vigencia_suc`)
                             VALUES(:nom,:dir,:fono,:vig)";
-
+                
 
                 $stmt = $pdo->prepare($sql_crear_suc);
                 $stmt->bindParam(":nom", $this->nombre, PDO::PARAM_STR);
@@ -51,9 +56,8 @@ class SucursalDAO
     Modificar Sucursal
     //////////////////////////////////////*/
 
-    public function modificar_suc($id)  {
+    public function modificar_suc()  {
 
-        $this->id  = $id;
 
         try{
                 $pdo = AccesoDB::getCon();

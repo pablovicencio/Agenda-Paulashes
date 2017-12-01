@@ -86,7 +86,7 @@ $('#logo').css('visibility','visible')
     <td style="background:#74ccd1 ; color:black">VIGENCIA</td>  
 </tr> 
 <?php
-              $re = $fun->cargar_clientes();
+              $re = $fun->cargar_clientes(0);
               foreach($re as $row){
 
                 $id_cli = $row['id_cli'];

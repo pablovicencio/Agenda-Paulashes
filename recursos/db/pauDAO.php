@@ -7,36 +7,36 @@
 	
 	class pauDAO{
 
-		/*///////////////////////////////////////
-			control choque citas
-		//////////////////////////////////////*/
-		public function control_cita($fec_cita,$hora_cita,$hora_ter,$id_cli,$id_estilista) {
+		// /*///////////////////////////////////////
+		// 	control choque citas
+		// //////////////////////////////////////*/
+		// public function control_cita($fec_cita,$hora_cita,$hora_ter,$id_cli,$id_estilista) {
 
-			try{
+		// 	try{
 				
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
 
-				$sql = "select id_cita from citas where fec_cita = '".$fec_cita."' 
-						and (cast(hora_cita as time) >= '".$hora_cita.":00' and cast(hora_cita as time) < '".$hora_ter.":00')
-						and (id_cli = ".$id_cli." or id_estilista = ".$id_estilista.") and estado_cita <> 4
-						union all
-						select id_cita from citas where fec_cita = '".$fec_cita."'
-						and (cast(hora_ter as time) > '".$hora_cita.":00' and cast(hora_ter as time) <= '".$hora_ter.":00')
-						and (id_cli = ".$id_cli." or id_estilista = ".$id_estilista.") and estado_cita <> 4";
+		// 		$sql = "select id_cita from citas where fec_cita = '".$fec_cita."' 
+		// 				and (cast(hora_cita as time) >= '".$hora_cita.":00' and cast(hora_cita as time) < '".$hora_ter.":00')
+		// 				and (id_cli = ".$id_cli." or id_estilista = ".$id_estilista.") and estado_cita <> 4
+		// 				union all
+		// 				select id_cita from citas where fec_cita = '".$fec_cita."'
+		// 				and (cast(hora_ter as time) > '".$hora_cita.":00' and cast(hora_ter as time) <= '".$hora_ter.":00')
+		// 				and (id_cli = ".$id_cli." or id_estilista = ".$id_estilista.") and estado_cita <> 4";
 				
 
-				$stmt = $pdo->prepare($sql);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql);
+		// 		$stmt->execute();
 
-				$response = $stmt->fetchAll();
-				return $response;
+		// 		$response = $stmt->fetchAll();
+		// 		return $response;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 		/*///////////////////////////////////////
@@ -240,57 +240,57 @@
 
 
 
-		/*///////////////////////////////////////
-			Cargar horas agendadas del dia
-		//////////////////////////////////////*/
-		public function cargar_horas_agen($dia) {
+		// /*///////////////////////////////////////
+		// 	Cargar horas agendadas del dia
+		// //////////////////////////////////////*/
+		// public function cargar_horas_agen($dia) {
 
-			try{
+		// 	try{
 				
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
 
-				$sql = "select a.hora_cita, a.hora_ter, b.nom_cli, c.nom_estilista, d.desc_item ubicacion, e.desc_item estado,c.color_estilista
-						from citas a, clientes b, estilistas c, parametros d, parametros e
-						where a.id_cli = b.id_cli and a.id_estilista = c.id_estilista and a.ubicacion_age = d.cod_item and d.cod_grupo = 1 and d.vigencia = 1
-						and a.estado_cita = e.cod_item and e.cod_grupo = 2 and e.vigencia = 1 and a.estado_cita <> 4 and  fec_cita = '".$dia."' order by a.hora_cita,a.hora_ter";
+		// 		$sql = "select a.hora_cita, a.hora_ter, b.nom_cli, c.nom_estilista, d.desc_item ubicacion, e.desc_item estado,c.color_estilista
+		// 				from citas a, clientes b, estilistas c, parametros d, parametros e
+		// 				where a.id_cli = b.id_cli and a.id_estilista = c.id_estilista and a.ubicacion_age = d.cod_item and d.cod_grupo = 1 and d.vigencia = 1
+		// 				and a.estado_cita = e.cod_item and e.cod_grupo = 2 and e.vigencia = 1 and a.estado_cita <> 4 and  fec_cita = '".$dia."' order by a.hora_cita,a.hora_ter";
 
-				$stmt = $pdo->prepare($sql);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql);
+		// 		$stmt->execute();
 
-				$response = $stmt->fetchAll();
-				return $response;
+		// 		$response = $stmt->fetchAll();
+		// 		return $response;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
-
-
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
-		/*///////////////////////////////////////
-			crear cita
-		//////////////////////////////////////*/
-		public function ins_cit($fec_cita,$hora_cita,$hora_ter,$fec_reg,$ubicacion_age,$estado_cita,$id_cli,$id_estilista) {
 
-			try{
+
+		// /*///////////////////////////////////////
+		// 	crear cita
+		// //////////////////////////////////////*/
+		// public function ins_cit($fec_cita,$hora_cita,$hora_ter,$fec_reg,$ubicacion_age,$estado_cita,$id_cli,$id_estilista) {
+
+		// 	try{
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
-				$sql_usu = "INSERT INTO `citas`(`fec_cita`,`hora_cita`,`hora_ter`,`fec_reg`,`ubicacion_age`,`obs_age`,`estado_cita`,`id_cli`,`id_estilista`)
-										VALUES('".$fec_cita."','".$hora_cita."','".$hora_ter."','".$fec_reg."','".$ubicacion_age."','','".$estado_cita."','".$id_cli."','".$id_estilista."')";
+		// 		$sql_usu = "INSERT INTO `citas`(`fec_cita`,`hora_cita`,`hora_ter`,`fec_reg`,`ubicacion_age`,`obs_age`,`estado_cita`,`id_cli`,`id_estilista`)
+		// 								VALUES('".$fec_cita."','".$hora_cita."','".$hora_ter."','".$fec_reg."','".$ubicacion_age."','','".$estado_cita."','".$id_cli."','".$id_estilista."')";
 
 
-				$stmt = $pdo->prepare($sql_usu);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql_usu);
+		// 		$stmt->execute();
 		
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 

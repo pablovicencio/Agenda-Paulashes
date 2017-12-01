@@ -23,9 +23,9 @@ session_start();
 			$vig = 0; 
 		}
 		
-		$dao = new SucursalDAO($nom,$dir, $fono, $vig); 
+		$dao = new SucursalDAO($id_suc,$nom,$dir, $fono, $vig); 
 
-		$modificar_suc = $dao->modificar_suc($id_suc);
+		$modificar_suc = $dao->modificar_suc();
 			
 			if (count($modificar_suc)>0){
 			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_usu/sucursales.php';</script>";  

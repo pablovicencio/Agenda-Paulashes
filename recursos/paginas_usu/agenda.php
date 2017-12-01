@@ -26,12 +26,12 @@ $week = 1;
     if ($day_week == 7) { $week++; };
 
   }
-  require_once '../db/pauDAO.php';
+  require_once '../clases/Funciones.php';
     $mes_lbl = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre', 'Octubre', 'Noviembre','Diciembre');
 
     $numeroMes = date('m', $fecha) -1;
 
-  $dao = new pauDAO(); 
+  $fun = new Funciones(); 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,11 +44,10 @@ $week = 1;
 function modal(fec,nom) {
     $("#horas tbody tr").remove(); 
     document.getElementById('fec_cit').innerHTML = fec;
-    document.getElementById('nom').innerHTML = nom;
+    document.getElementById('nom_usu').innerHTML = nom;
 
      $.ajax({
-    // aqui va la ubicación de la página PHP
-      url: '../controles/control7.php',
+      url: '../controles/control_horasAgenda.php',
       type: 'POST',
       data: { fecha: fec},
       dataType:'json',
@@ -61,9 +60,9 @@ function modal(fec,nom) {
         for (  i = 0 ; i < filas; i++){ //cuenta la cantidad de registros
           var nuevafila= "<tr><td>" +
           result[i].hora_cita + "</td><td>" +
-          result[i].hora_ter + "</td><td>" +
-          result[i].nom_cli + "</td><td bgcolor='"+result[i].color_estilista+"'>" +
-          result[i].nom_estilista + "</td><td>" +
+          result[i].hora_ter_cita + "</td><td>" +
+          result[i].nom_cli + "</td><td bgcolor='"+result[i].color_usu+"'>" +
+          result[i].nom_usu + "</td><td>" +
           result[i].ubicacion + "</td><td>" +
           result[i].estado + "</td></tr>"
      
@@ -92,12 +91,12 @@ $('#logo').css('visibility','visible')
 
 
 
-function add(fec_cit,cli,hora_ini,hora_ter,ubi){
-    var array = [fec_cit,cli,hora_ini,hora_ter,ubi];
+function agregar_cita(fec_cit,cli,hora_ini,hora_ter,ubi,nom){
+    var array = [fec_cit,cli,hora_ini,hora_ter,ubi,nom];
     
     $.ajax({
     // aqui va la ubicación de la página PHP
-      url: '../controles/control6.php',
+      url: '../controles/control_agregarCita.php',
       type: 'POST',
       //dataType: 'html',
       data: { cita:JSON.stringify(array)},
@@ -108,25 +107,6 @@ function add(fec_cit,cli,hora_ini,hora_ter,ubi){
   })
 }
 </script>
-
-
-<style type="text/css">
-    * {
-        margin: 0px;
-        padding: 0px;
-    }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
-
-        body > header {
-            height: 20%;
-            min-height: 200px;
-        }
-
-</style>
 </head>
 
 <body>
@@ -229,14 +209,14 @@ function add(fec_cit,cli,hora_ini,hora_ter,ubi){
 <div class="modalDialog" id="myModal" >
     <div role="document">
         <a href="#close" title="Close" class="close">X</a>
-        <header><h2><span id="nom"></span></h2></header><br><br>
+        <header><h2><span id="nom_usu"></span></h2></header><br><br>
         <label>Fecha:</label><span id="fec_cit"></span><br><br>
 
         <label>Cliente:</label>
-        <select name="cli" size="1" class="form-control" id="cli" type="text" >
+        <select name="cli" size="1" class="form-control" id="cli" type="text" required>
            <option value="" selected disabled>Seleccione el cliente</option>
                  <?php 
-                  $re = $dao->cargar_clientes();   
+                  $re = $fun->cargar_clientes(1);   
                   foreach($re as $row)      
                       {
                         ?>
@@ -250,10 +230,10 @@ function add(fec_cit,cli,hora_ini,hora_ter,ubi){
                   ?>           
         </select><br><br>
         <label>Hora Inicio:</label>
-        <input type="time" name="hora_ini" id="hora_ini">
+        <input type="time" name="hora_ini" id="hora_ini" required>
         <br><br>
         <label>Tiempo de duración de la atencion:</label>
-        <select name="hora_ter" size="1" class="form-control" id="hora_ter" type="text" >
+        <select name="hora_ter" size="1" class="form-control" id="hora_ter" type="text" required>
                          <option value="" selected disabled>Seleccione duración</option>
                          <option value="60"> 1 Hr</option>
                          <option value="90"> 1:30 Hrs</option>
@@ -261,22 +241,48 @@ function add(fec_cit,cli,hora_ini,hora_ter,ubi){
         </select>
         <br><br>
         <label>Ubicación:</label>
-        <select name="ubi" size="1" class="form-control" id="ubi" type="text" >
+        <select name="ubi" size="1" class="form-control" id="ubi" type="text" required>
            <option  value="" selected disabled>Seleccione Ubicación</option>
-                         <option value="1">Los Andes</option>
-                         <option value="2">Santiago</option>
-                         <option value="3">Domicilio</option>
-                         <option value="4">Otra</option> 
+                         <?php 
+                  $re1 = $fun->cargar_sucursales(1);   
+                  foreach($re1 as $row1)      
+                      {
+                        ?>
+                        
+                         <option value="<?php echo $row1['id_suc'] ?> ">
+                         <?php echo $row1['nom_suc'] ?>
+                         </option>
+                            
+                        <?php
+                      }    
+                  ?>    
         </select>
         <br><br>
 
-                  
-                  
-                 
-        
-        <center><a href="#" onclick="add(fec_cit.innerHTML,document.getElementById('cli').value,hora_ini.value,document.getElementById('hora_ter').value,document.getElementById('ubi').value);" class="l">Agendar</a></center> <br><br>
+         <label>Estilista:</label>
 
-      <table border="1" class="grid" name="horas" id="horas">
+        <?php if ($_SESSION['perfil'] == 1) {
+          echo '<span id="nom"></span>';
+        }else{
+          echo ' <select name="nom" size="1" class="form-control" id="nom" type="text" required> 
+          <option  value="" selected disabled>Seleccione Estilista</option> ';
+          $re2 = $fun->cargar_estilistas();   
+                  foreach($re2 as $row2)      
+                      {
+                        echo ' <option value="'.$row2['id_usu'].'">'.$row2['nom_usu'].'</option> ';
+                      }
+
+                      echo '</select> ';
+        }
+
+
+        ?>
+        
+        <br><br>
+
+        <center><a href="#" onclick="agregar_cita(fec_cit.innerHTML,document.getElementById('cli').value,hora_ini.value,document.getElementById('hora_ter').value,document.getElementById('ubi').value,document.getElementById('nom').value);" class="l">Agendar</a></center> <br><br>
+
+    <table border="1" class="grid" name="horas" id="horas">
     <caption>Horas agendadas</caption>
     <thead>
 

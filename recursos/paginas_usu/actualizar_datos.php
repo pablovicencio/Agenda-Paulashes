@@ -81,7 +81,7 @@ $('#logo').css('visibility','visible')
 </label><br /><br />
 <a href="cambiar_pass.php" class="l">Cambiar Contraseña</a><br><br>
 <hr><br />
-<form role="form" action="../controles/control_modUsuario.php" method="post" id="upd_usu" name="upd_usu" onsubmit="return validar(this)">
+<form role="form" action="../controles/control_actUsuario.php" method="post" id="upd_usu" name="upd_usu" onsubmit="return validar(this)">
 <blockquote>
 
                 <blockquote>

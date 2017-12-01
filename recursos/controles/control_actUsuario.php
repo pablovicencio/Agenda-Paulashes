@@ -18,30 +18,23 @@ session_start();
 		$mail = $_POST['mail_usu'];
 		$fono = $_POST['fono_usu'];
 		$color = $_POST['color_usu'];
-		$grupo = $_POST['grupo_usu'];
-		if(isset($_POST['vig'])){
-			$vig = 1; 
-		}else{
-			$vig = 0; 
-		}
-		if(isset($_POST['super'])){
-			$super = 1; 
-		}else{
-			$super = 0; 
-		}
+		$grupo = $_SESSION['perfil'];
+		$super = $_SESSION['super'];
+		$vig = 1;
+		
 		
 		$dao = new UsuarioDAO($id,$nom, $mail, $fono,'', $vig,$super,$color, $grupo); 
 
 		$modificar_usuario = $dao->modificar_usuario();
 			
 			if (count($modificar_usuario)>0){
-			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_usu/usuarios.php';</script>";  
+			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_usu/actualizar_datos.php';</script>";  
 			} else {
-				echo"<script type=\"text/javascript\">alert('Estilista: ".$nom." modificado correctamente.'); 		window.location='../paginas_usu/usuarios.php';</script>"; 
+				echo"<script type=\"text/javascript\">alert('Estilista: ".$nom." modificado correctamente.'); 		window.location='../paginas_usu/actualizar_datos.php';</script>"; 
 	}
 	
 	} catch (Exception $e) {
-		echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/usuarios.php';</script>"; 
+		echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/actualizar_datos.php';</script>"; 
 
 	}
 ?>

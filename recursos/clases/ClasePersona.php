@@ -1,5 +1,6 @@
 <?php
 require_once '../db/db.php';
+include_once 'ClasePersona.php';
 
 /*/////////////////////////////
 Clase abstracta Persona
@@ -21,13 +22,14 @@ Clase Usuario
 
 class UsuarioDAO extends PersonaDAO
 {
-    private $contraseña  ;
-    private $vigencia ;
-    private $super_usu ;
-    private $color ;
-    private $tipo ; 
+    private $contraseña;
+    private $vigencia;
+    private $super_usu;
+    private $color;
+    private $tipo; 
 
-    public function __construct($nombre, $mail, $fono, $contraseña,$vigencia,$super_usu, $color, $tipo) {
+    public function __construct($id=null,$nombre=null, $mail=null, $fono=null, $contraseña=null,$vigencia=null,$super_usu=null, $color=null, $tipo=null) {
+        $this->id  = $id;
         $this->nombre  = $nombre;
         $this->mail  = $mail;
         $this->fono  = $fono;
@@ -36,6 +38,10 @@ class UsuarioDAO extends PersonaDAO
         $this->super_usu  = $super_usu;
         $this->color  = $color;
         $this->tipo  = $tipo;
+    }
+
+    public function getUsuario() {
+    return $this->id;
     }
 
 
@@ -92,9 +98,9 @@ class UsuarioDAO extends PersonaDAO
     Modificar Usuario
     //////////////////////////////////////*/
 
-    public function modificar_usuario($id)  {
+    public function modificar_usuario()  {
 
-        $this->id  = $id;
+        
 
         try{
                 $pdo = AccesoDB::getCon();
@@ -188,7 +194,7 @@ class UsuarioDAO extends PersonaDAO
                         
                         echo"<script type=\"text/javascript\">      window.location='../paginas_usu/index_usuario.php';</script>"; 
                         }else { 
-                           echo"<script type=\"text/javascript\">alert('Error, favor verifique sus datos e intente nuevamente o comuniquese con un super usuario para revisar su vigencia.');        </script>"; 
+                           echo"<script type=\"text/javascript\">alert('Error, favor verifique sus datos e intente nuevamente o comuniquese con un super usuario para revisar su vigencia.');window.location='../../index.html';        </script>"; 
                          }
 
         
@@ -217,12 +223,17 @@ class ClienteDAO extends PersonaDAO
     private $contraseña  ;
     private $vigencia ;
 
-    public function __construct($nombre,$rut, $mail, $fono, $vigencia) {
+    public function __construct($id=null,$nombre=null,$rut=null, $mail=null, $fono=null, $vigencia=null) {
+        $this->id  = $id;
         $this->nombre  = $nombre;
         $this->rut  = $rut;
         $this->mail  = $mail;
         $this->fono  = $fono;
         $this->vigencia  = $vigencia;
+    }
+
+    public function getCliente() {
+    return $this->id;
     }
 
    /*///////////////////////////////////////
@@ -256,19 +267,19 @@ class ClienteDAO extends PersonaDAO
     Modificar Cliente
     //////////////////////////////////////*/
 
-    public function modificar_cli($id)  {
+    public function modificar_cli()  {
 
-        $this->id  = $id;
 
         try{
                 $pdo = AccesoDB::getCon();
 
                 $sql_mod_cli = "update clientes
-                            set  mail_cli = :mail, fono_cli = :fono, nom_cli = :nom, vigencia_cli = :vig where id_cli =:id ";
+                            set  mail_cli = :mail, rut_cli = :rut, fono_cli = :fono, nom_cli = :nom, vigencia_cli = :vig where id_cli =:id ";
 
 
                 $stmt = $pdo->prepare($sql_mod_cli);
                 $stmt->bindParam(":mail", $this->mail, PDO::PARAM_STR);
+                $stmt->bindParam(":rut", $this->rut, PDO::PARAM_STR);
                 $stmt->bindParam(":fono", $this->fono, PDO::PARAM_INT);
                 $stmt->bindParam(":nom", $this->nombre, PDO::PARAM_STR);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);

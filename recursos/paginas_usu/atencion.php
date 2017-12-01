@@ -8,11 +8,11 @@ if( isset($_SESSION['id_usu']) ){
     //Si no lo redirige a la pagina index para que inicie la sesion 
     header("location: ../../index.html");
   }  
-  require_once '../db/pauDAO.php';
+  require_once '../clases/Funciones.php';
   
   
 
-  $dao = new pauDAO(); 
+  $fun = new Funciones(); 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,7 +24,7 @@ if( isset($_SESSION['id_usu']) ){
 <script>
 
 function validar(f){
-f.btnAc.value="Creando Usuario";
+f.btnAc.value="Actualizando Cita";
 f.btnAc.disabled=true;
 return true}
 
@@ -43,25 +43,6 @@ $('#logo').css('visibility','visible')
 
 
 </script>
-
-
-<style type="text/css">
-    * {
-        margin: 0px;
-        padding: 0px;
-    }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-    }
-
-        body > header {
-            height: 20%;
-            min-height: 200px;
-        }
-
-</style>
 </head>
 
 <body>
@@ -105,7 +86,7 @@ $('#logo').css('visibility','visible')
 </tr> 
 <?php
               $id_cita = $_GET{'dato'};
-              $re = $dao->cargar_atenciones_cli($id_cita);
+              $re = $fun->cargar_atenciones($id_cita);
               foreach($re as $row){
                   $fecha = date('d-m-Y',strtotime($row['fec_cita']));
                 
@@ -119,7 +100,7 @@ $('#logo').css('visibility','visible')
 </table><br><br>
 
 <?php
-              $re1 = $dao->cargar_datos_cita($id_cita);
+              $re1 = $fun->cargar_datos_cita($id_cita);
               foreach($re1 as $row1){
               }
 ?>
@@ -129,7 +110,7 @@ $('#logo').css('visibility','visible')
 <label>
 <h2>Actualizar Cita</h2>
 </label><br /><br />
-<form role="form" action="../controles/control9.php" method="post" id="new_cli" name="new_cli" onsubmit="return validar(this)">
+<form role="form" action="../controles/control_actCita.php" method="post" id="new_cli" name="new_cli" onsubmit="return validar(this)">
 <blockquote>
               <input type="hidden"  name="id" id="id" class="form-control" value="<?php echo $id_cita; ?>" required readonly/>
               
@@ -158,7 +139,7 @@ $('#logo').css('visibility','visible')
 
                 <blockquote>
         <label for="hora_ter" > Hora Termino aproximado </label><br />
-        <input type="text" name="hora_ter" id="hora_ter" class="form-control" value="<?php echo $row1['hora_ter']; ?>"  required readonly />
+        <input type="text" name="hora_ter" id="hora_ter" class="form-control" value="<?php echo $row1['hora_ter_cita']; ?>"  required readonly />
                 </blockquote> <br /><br />
 
                 <blockquote>

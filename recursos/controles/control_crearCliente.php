@@ -51,7 +51,7 @@ session_start();
 			
 		}else{
 
-		$dao = new ClienteDAO($nom,$rut, $mail, $fono, $vig); 
+		$dao = new ClienteDAO('',$nom,$rut, $mail, $fono, $vig); 
 
 		$crear_cli = $dao->crear_cliente();
 			

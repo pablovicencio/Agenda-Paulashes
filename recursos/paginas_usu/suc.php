@@ -95,7 +95,7 @@ $('#logo').css('visibility','visible')
 
                 <blockquote>
         <label for="nom" > Nombre Sucursal </label><br />
-        <input type="text" name="nom_suc" id="nom_suc" class="form-control" maxlength="100" size="30" value="<?php echo $row['nom_suc']; ?>"  required />
+        <input type="text" name="nom_suc" id="nom_suc" class="form-control" maxlength="100" size="30" value="<?php echo $row['nom_suc']; ?>"  required onkeyup="javascript:this.value=this.value.toUpperCase();"/>
                 </blockquote> <br /><br />
                 
                 

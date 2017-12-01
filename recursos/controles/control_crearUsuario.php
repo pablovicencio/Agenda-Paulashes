@@ -38,7 +38,7 @@ session_start();
 			
 		}else{
 			$nueva_pass = $fun->generaPass();
-			$dao = new UsuarioDAO($nom, $mail, $fono, md5($nueva_pass),$vig,$super, $color, $grupo); 
+			$dao = new UsuarioDAO('',$nom, $mail, $fono, md5($nueva_pass),$vig,$super, $color, $grupo); 
 		
 			$crear_usu = $dao->crear_usuario();
 			
