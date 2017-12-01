@@ -128,7 +128,7 @@ class UsuarioDAO extends PersonaDAO
 
                 $stmt = $pdo->prepare($sql_mod_tipo_usu);
                 $stmt->bindParam(":tipo", $this->tipo, PDO::PARAM_INT);
-                $stmt->bindParam(":fk_usu", $id, PDO::PARAM_INT);
+                $stmt->bindParam(":fk_usu", $this->id, PDO::PARAM_INT);
                 $stmt->execute();
         
 

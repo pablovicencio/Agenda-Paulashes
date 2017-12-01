@@ -17,18 +17,17 @@ session_start();
 
 	try{
 
-		$cita = new CitaDAO($id_cita); 
-
 		$id_cita = $_POST['id'];
-		$est_ant = $_POST['est'];
+
+		$cita = new CitaDAO($id_cita); 
 
 
 		if (isset($_POST['conf'])){
-			$upd_cit = $cita->confirmar_cita();
+			$upd_cit = $cita->confirmar_cita($us);
 			$aviso = 'Confirmada';
 
 		}elseif (isset($_POST['anu'])) {
-			$upd_cit = $cita->anular_cita();
+			$upd_cit = $cita->anular_cita($us);
 			$aviso = 'Anulada';
 
 		}elseif (isset($_POST['doc'])) {
@@ -39,16 +38,16 @@ session_start();
 
 			$ate = new AtencionDAO($fecha, $obs);
 
-			$upd_cit = $dao->atender_cita($cita->getCita(), $usu->getUsuario());
+			$upd_cit = $ate->atender_cita($cita->getCita(), $usu->getUsuario());
 			$aviso = 'Documentada';
 		}
 		
 	
 			
 			if (count($upd_cit)>0){
-			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../page_admin/index_estilista.php';</script>"; 
+			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_usu/index_usuario.php';</script>"; 
 			} else {
-				echo"<script type=\"text/javascript\">alert('Cita ".$aviso." correctamente'); window.location='../page_admin/index_estilista.php';</script>"; 
+				echo"<script type=\"text/javascript\">alert('Cita ".$aviso." correctamente'); window.location='../paginas_usu/index_usuario.php';</script>"; 
 	}
 	
 	} catch (Exception $e) {

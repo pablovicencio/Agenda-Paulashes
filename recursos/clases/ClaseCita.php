@@ -96,7 +96,11 @@ public function getCita() {
         /*///////////////////////////////////////
         Confirmar Cita
         //////////////////////////////////////*/
-        public function confirmar_cita() {
+        public function confirmar_cita($id_usu) {
+
+            $fec_log = date("Y-m-d (H:i:s)", time());
+            $est_ant = 1;
+            $est_new = 2;
  
 
             try{
@@ -113,6 +117,19 @@ public function getCita() {
                 $stmt->bindParam("id_cita", $this->id, PDO::PARAM_INT);
                 $stmt->execute();
 
+                $sql_log = "INSERT INTO `log_citas`
+                                (`estado_ant_log`,`estado_new_log`,`fec_log`,`id_usu_log`,`fk_id_cita`)
+                                VALUES(:est_ant, :est_new, :fec, :id_usu, :id_cita)";
+
+                $stmt = $pdo->prepare($sql_log);
+                $stmt->bindParam("est_ant", $est_ant, PDO::PARAM_INT);
+                $stmt->bindParam("est_new", $est_new, PDO::PARAM_INT);
+                $stmt->bindParam("fec", $fec_log, PDO::PARAM_STR);
+                $stmt->bindParam("id_usu", $id_usu, PDO::PARAM_INT);
+                $stmt->bindParam("id_cita", $this->id, PDO::PARAM_INT);
+                $stmt->execute();
+
+
 
             } catch (Exception $e) {
                 echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/agenda.php';</script>"; 
@@ -124,7 +141,11 @@ public function getCita() {
         /*///////////////////////////////////////
         Anular Cita
         //////////////////////////////////////*/
-        public function anular_cita() {
+        public function anular_cita($id_usu) {
+
+            $fec_log = date("Y-m-d (H:i:s)", time());
+            $est_ant = 1;
+            $est_new = 4;
 
 
             try{
@@ -138,6 +159,18 @@ public function getCita() {
                                 where id_cita = :id_cita";
 
                 $stmt = $pdo->prepare($sql_anu_cit);
+                $stmt->bindParam("id_cita", $this->id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $sql_log = "INSERT INTO `log_citas`
+                                (`estado_ant_log`,`estado_new_log`,`fec_log`,`id_usu_log`,`fk_id_cita`)
+                                VALUES(:est_ant, :est_new, :fec, :id_usu, :id_cita)";
+
+                $stmt = $pdo->prepare($sql_log);
+                $stmt->bindParam("est_ant", $est_ant, PDO::PARAM_INT);
+                $stmt->bindParam("est_new", $est_new, PDO::PARAM_INT);
+                $stmt->bindParam("fec", $fec_log, PDO::PARAM_STR);
+                $stmt->bindParam("id_usu", $id_usu, PDO::PARAM_INT);
                 $stmt->bindParam("id_cita", $this->id, PDO::PARAM_INT);
                 $stmt->execute();
 

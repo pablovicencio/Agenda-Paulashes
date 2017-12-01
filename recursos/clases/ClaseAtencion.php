@@ -21,6 +21,8 @@ class AtencionDAO
         //////////////////////////////////////*/
         public function atender_cita($id_cita, $id_usu) {
 
+            $est_ant = 2;
+            $est_new = 3;
 
             try{
 
@@ -33,14 +35,20 @@ class AtencionDAO
 
 
                 $stmt = $pdo->prepare($sql_ate_cita);
-                $stmt->bindParam("fec_cita", $this->fecha_cita, PDO::PARAM_STR);
-                $stmt->bindParam("hora_cita", $this->hora, PDO::PARAM_STR);
-                $stmt->bindParam("hora_ter", $this->hora_termino, PDO::PARAM_STR);
-                $stmt->bindParam("fec_reg", $this->fec_reg, PDO::PARAM_STR);
-                $stmt->bindParam("suc",$id_suc , PDO::PARAM_INT);
-                $stmt->bindParam("estado", $this->estado_cita, PDO::PARAM_INT);
-                $stmt->bindParam("id_cli", $id_cli, PDO::PARAM_INT);
-                $stmt->bindParam("id_est", $id_estilista, PDO::PARAM_INT);
+                $stmt->bindParam("obs", $this->obs, PDO::PARAM_STR);
+                $stmt->bindParam("id_cita", $id_cita, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $sql_log = "INSERT INTO `log_citas`
+                                (`estado_ant_log`,`estado_new_log`,`fec_log`,`id_usu_log`,`fk_id_cita`)
+                                VALUES(:est_ant, :est_new, :fec, :id_usu, :id_cita)";
+
+                $stmt = $pdo->prepare($sql_log);
+                $stmt->bindParam("est_ant", $est_ant, PDO::PARAM_INT);
+                $stmt->bindParam("est_new", $est_new, PDO::PARAM_INT);
+                $stmt->bindParam("fec", $this->fecha, PDO::PARAM_STR);
+                $stmt->bindParam("id_usu", $id_usu, PDO::PARAM_INT);
+                $stmt->bindParam("id_cita", $id_cita, PDO::PARAM_INT);
                 $stmt->execute();
         
 

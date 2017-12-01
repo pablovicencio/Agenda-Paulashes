@@ -54,8 +54,8 @@ $('#logo').css('visibility','visible')
 <div id="menu">
 <ul >
   <li><a href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesion?');">Cerrar Sesión</a></li>
-  <?php if ($us == 1) {echo ('<li><a  href="sucursales.php">Sucursales</a></li>');}  ?>
-  <?php if ($us == 1) {echo ('<li><a  href="usuarios.php">Usuarios</a></li>');}  ?>
+  <?php if ($_SESSION['super'] == 1) {echo ('<li><a  href="sucursales.php">Sucursales</a></li>');}  ?>
+  <?php if ($_SESSION['super'] == 1) {echo ('<li><a  href="usuarios.php">Usuarios</a></li>');}  ?>
   <li><a  href="actualizar_datos.php">Actualizar Mis Datos</a></li>
   <li><a  href="clientes.php">Clientes</a></li>
   <li><a href="agenda.php">Agenda</a></li>
@@ -91,7 +91,7 @@ $('#logo').css('visibility','visible')
                   $fecha = date('d-m-Y',strtotime($row['fec_cita']));
                 
                 echo ('<td>'.$fecha.'</td>');
-                echo ('<td  bgcolor="'.$row['color_estilista'].'">'.$row['nom_estilista'].'</td>');
+                echo ('<td  bgcolor="'.$row['color_usu'].'">'.$row['nom_usu'].'</td>');
                 echo ('<td>'.$row['ubi'].'</td>');
                 echo ('<td>'.$row['obs_age'].'</td></tr>');
     
