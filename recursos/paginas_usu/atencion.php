@@ -47,7 +47,7 @@ $('#logo').css('visibility','visible')
 
 <body>
 <div id="header">
-<center><img src="../img/banner.jpg" width="1180" height="148"/></center> 
+<center><img src="../img/banner.jpg" width="100%" height="10%"/></center> 
 </div><br>
 
 
@@ -115,6 +115,11 @@ $('#logo').css('visibility','visible')
               <input type="hidden"  name="id" id="id" class="form-control" value="<?php echo $id_cita; ?>" required readonly/>
               
             <label for="fecha" >Fecha Cita <?php echo date('d-m-Y',strtotime($row1['fec_cita'])); ?> </label><br /><br />
+
+            <blockquote>
+        <label for="est" > Estilista</label><br />
+        <input type="text" name="est" id="est" class="form-control" value="<?php echo $row1['nom_usu']; ?>" required readonly />
+                </blockquote> <br /><br />
                 
                 <blockquote>
         <label for="rut" > Rut Cliente </label><br />
@@ -155,11 +160,15 @@ $('#logo').css('visibility','visible')
                       <input type="submit" value="Anular Cita" id="anu" name="anu" onclick=\'return confirm("¿Deseas Anular la cita?");\'/></center> ';
                 break;
               case '2':
+              if ($_SESSION['perfil']== 1) {
                 echo '<blockquote>
                       <label for="obs" > Observación </label><br />
                       <textarea name="obs" cols="70" rows="5" id="obs" maxlength="500" required></textarea  />
                       </blockquote> <br /><br />
                       <center><input type="submit" value="Documentar Cita" id="doc" name="doc"  onclick=\'return confirm("¿Desea Documentar la atencion?");\'/> </center>';
+              }else{
+                echo 'Cita Confirmada para atención de estilista</center>';
+                    }
                 break;
               case '3':
                 echo '<blockquote>

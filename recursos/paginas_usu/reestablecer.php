@@ -7,13 +7,14 @@
 </head>
 
 <body>
+<center><img src="../img/banner.jpg" width="100%" height="10%"/></center> 
 <div class="contenido1" >
 <label>
 <h2>Restablecer Contraseña - Paulashes</h2>
 </label><br /><br />
 
 <form method="post" action="../controles/control_restablecer.php"> 
-<label >Ingrese el correo asociado a su cuenta:</label><input typr="email" name="mail" id="mail" class="form-control" size="90" required><span id="emailOK" class="texto"></span><br /><br />
+<label >Ingrese el correo asociado a su cuenta:</label><input typr="email" name="mail" id="mail" class="form-control" size="30" required><span id="emailOK" class="texto"></span><br /><br />
 </form>
 </body>
 <script>

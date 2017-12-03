@@ -46,7 +46,7 @@ $('#logo').css('visibility','visible')
 
 <body>
 <div id="header">
-<center><img src="../img/banner.jpg" width="1180" height="148"/></center> 
+<center><img src="../img/banner.jpg" width="100%" height="10%"/></center> 
 </div><br>
 
 
@@ -125,7 +125,7 @@ $('#logo').css('visibility','visible')
 
 
                 <blockquote>
-                 <label for="grupo" > Grupo Usuario</label><br />
+                 <label for="grupo" > Grupo Usuario</label> El cambio de Estilistas a Recepcionistas bloqueara las citas asociadas<br />
                 <select name="grupo_usu" size="1" class="form-control" id="grupo_usu" type="text" required >
                    <option value="" selected disabled>Seleccione el grupo del usuario</option>
                          <?php 

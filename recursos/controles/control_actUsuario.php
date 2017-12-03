@@ -13,7 +13,6 @@ session_start();
 	require_once '../clases/ClasePersona.php';
 
 	try{
-		$id = $_POST['id_usu'];
 		$nom = $_POST['nom_usu'];
 		$mail = $_POST['mail_usu'];
 		$fono = $_POST['fono_usu'];
@@ -23,7 +22,7 @@ session_start();
 		$vig = 1;
 		
 		
-		$dao = new UsuarioDAO($id,$nom, $mail, $fono,'', $vig,$super,$color, $grupo); 
+		$dao = new UsuarioDAO($us,$nom, $mail, $fono,'', $vig,$super,$color, $grupo); 
 
 		$modificar_usuario = $dao->modificar_usuario();
 			

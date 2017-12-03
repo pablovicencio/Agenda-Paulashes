@@ -13,6 +13,7 @@ session_start();
 	require_once '../clases/ClaseCita.php';
 	require_once '../clases/ClaseAtencion.php';
 	require_once '../clases/ClasePersona.php';
+	require_once '../clases/Funciones.php';
 
 
 	try{
@@ -31,6 +32,13 @@ session_start();
 			$aviso = 'Anulada';
 
 		}elseif (isset($_POST['doc'])) {
+
+			$fun = new funciones();
+			$validar_cita = $fun->validar_est_cita($id_cita);
+			if ($validar_cita['usu']<>$us ) {
+				echo"<script type=\"text/javascript\">alert('Error. No estas autorizado para atender esta cita'); window.location='../paginas_usu/index_usuario.php'; </script>";
+				goto fin;
+			}
 			$fecha = date("Y-m-d (H:i:s)", time());
 			$obs = $_POST['obs'];
 
@@ -49,6 +57,8 @@ session_start();
 			} else {
 				echo"<script type=\"text/javascript\">alert('Cita ".$aviso." correctamente'); window.location='../paginas_usu/index_usuario.php';</script>"; 
 	}
+
+	fin:
 	
 	} catch (Exception $e) {
 		//echo($e);

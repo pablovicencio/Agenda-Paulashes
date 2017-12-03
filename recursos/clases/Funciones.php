@@ -8,6 +8,60 @@ class Funciones
 {
 
         /*///////////////////////////////////////
+        Validar usuario para documentar cita
+        //////////////////////////////////////*/
+        public function validar_est_cita($id_cita) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+                $sql = "select a.fk_id_estilista usu from citas a, grupos_usuarios u where a.fk_id_estilista = u.fk_id_usu and  u.fk_id_grupo = 1 and id_cita = :id_cita";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":id_cita", $id_cita, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/index_usuario.php';</script>";
+            }
+        }
+
+
+        /*///////////////////////////////////////
+        Validar sucursal para quitar vigencia
+        //////////////////////////////////////*/
+        public function vigencia_suc($id_suc) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+                $sql = "select count(id_cita) citas from citas where fk_suc_cita = :id_suc and estado_cita in (1,2) and fec_cita > curdate()";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":id_suc", $id_suc, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/index_usuario.php';</script>";
+            }
+        }
+
+
+        /*///////////////////////////////////////
         Cargar Datos cita
         //////////////////////////////////////*/
         public function cargar_datos_cita($id_cita) {
@@ -18,11 +72,12 @@ class Funciones
                 $pdo = AccesoDB::getCon();
 
 
-                $sql = "select a.fec_cita, b.rut_cli, b.fono_cli, b.mail_cli,a.hora_cita,a.hora_ter_cita, ubi.nom_suc ubi, est.desc_item est , a.estado_cita, a.obs_age
-                        from citas a, clientes b, sucursales ubi, parametros est
+                $sql = "select a.fec_cita, b.rut_cli, b.fono_cli, b.mail_cli,a.hora_cita,a.hora_ter_cita, ubi.nom_suc ubi, est.desc_item est , a.estado_cita, a.obs_age, u.nom_usu
+                        from citas a, clientes b, sucursales ubi, parametros est, usuarios u
                         where  a.fk_id_cli = b.id_cli
                         and a.fk_suc_cita = ubi.id_suc and ubi.vigencia_suc = 1
                         and a.estado_cita = est.cod_item and est.cod_grupo = 1
+                        and a.fk_id_estilista = u.id_usu
                         and id_cita = :id_cita";
                 
 

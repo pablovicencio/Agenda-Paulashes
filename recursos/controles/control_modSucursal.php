@@ -11,6 +11,7 @@ session_start();
 	}      
 	     
 	require_once '../clases/ClaseSucursal.php';
+	require_once '../clases/Funciones.php';
 
 	try{
 		$id_suc = $_POST['id_suc'];
@@ -21,7 +22,17 @@ session_start();
 			$vig = 1; 
 		}else{
 			$vig = 0; 
+			$fun = new funciones();
+			$validar_suc = $fun->vigencia_suc($id_suc);
+			//var_dump($validar_suc['citas']);
+			if ($validar_suc['citas'] > 0) {
+				echo"<script type=\"text/javascript\">alert('Error. La sucursal ".$nom.", aun tiene citas agendadas, para quitar la vigencia debe anularlas y reagendarlas en otra sucursal'); window.location='../paginas_usu/sucursales.php'; </script>";
+				goto fin;
+			}
+
 		}
+
+
 		
 		$dao = new SucursalDAO($id_suc,$nom,$dir, $fono, $vig); 
 
@@ -31,7 +42,8 @@ session_start();
 			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_usu/sucursales.php';</script>";  
 			} else {
 				echo"<script type=\"text/javascript\">alert('Sucursal: ".$nom." modificada correctamente.'); 		window.location='../paginas_usu/sucursales.php';</script>"; 
-	}
+			}
+			fin:
 	
 	} catch (Exception $e) {
 		//echo($e);

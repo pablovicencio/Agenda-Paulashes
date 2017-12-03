@@ -39,120 +39,120 @@
 		// }
 
 
-		/*///////////////////////////////////////
-			documentar cita
-		//////////////////////////////////////*/
-		public function doc_cit($id_cita, $estado, $fec, $obs) {
+		// /*///////////////////////////////////////
+		// 	documentar cita
+		// //////////////////////////////////////*/
+		// public function doc_cit($id_cita, $estado, $fec, $obs) {
 
-			try{
+		// 	try{
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
-				$sql_upd_cit = "update citas
-								set estado_cita = ".$estado." , fec_aten = '".$fec."', obs_age = '".$obs."'
-								where id_cita = ".$id_cita."";
+		// 		$sql_upd_cit = "update citas
+		// 						set estado_cita = ".$estado." , fec_aten = '".$fec."', obs_age = '".$obs."'
+		// 						where id_cita = ".$id_cita."";
 
 
-				$stmt = $pdo->prepare($sql_upd_cit);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql_upd_cit);
+		// 		$stmt->execute();
 		
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 
 
 
-		/*///////////////////////////////////////
-			confirmar o anula cita
-		//////////////////////////////////////*/
-		public function upd_cit($id_cita, $estado, $fec) {
+		// /*///////////////////////////////////////
+		// 	confirmar o anula cita
+		// //////////////////////////////////////*/
+		// public function upd_cit($id_cita, $estado, $fec) {
 
-			try{
+		// 	try{
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
-				$sql_upd_cit = "update citas
-							set estado_cita = ".$estado." , fec_aten = '".$fec."'
-							where id_cita = ".$id_cita."";
+		// 		$sql_upd_cit = "update citas
+		// 					set estado_cita = ".$estado." , fec_aten = '".$fec."'
+		// 					where id_cita = ".$id_cita."";
 
 
-				$stmt = $pdo->prepare($sql_upd_cit);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql_upd_cit);
+		// 		$stmt->execute();
 		
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 
 
-		/*///////////////////////////////////////
-			Cargar Datos cita
-		//////////////////////////////////////*/
-		public function cargar_datos_cita($id_cita) {
+		// /*///////////////////////////////////////
+		// 	Cargar Datos cita
+		// //////////////////////////////////////*/
+		// public function cargar_datos_cita($id_cita) {
 
-			try{
+		// 	try{
 				
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
 
-				$sql = "select a.fec_cita, b.rut_cli, b.fono_cli, b.mail_cli,a.hora_cita,a.hora_ter, ubi.desc_item ubi, est.desc_item est , a.estado_cita, a.obs_age
-						from citas a, clientes b, parametros ubi, parametros est
-						where  a.id_cli = b.id_cli
-						and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
-						and a.estado_cita = est.cod_item and est.cod_grupo = 2
-						and id_cita = ".$id_cita."";
+		// 		$sql = "select a.fec_cita, b.rut_cli, b.fono_cli, b.mail_cli,a.hora_cita,a.hora_ter, ubi.desc_item ubi, est.desc_item est , a.estado_cita, a.obs_age
+		// 				from citas a, clientes b, parametros ubi, parametros est
+		// 				where  a.id_cli = b.id_cli
+		// 				and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
+		// 				and a.estado_cita = est.cod_item and est.cod_grupo = 2
+		// 				and id_cita = ".$id_cita."";
 				
 
-				$stmt = $pdo->prepare($sql);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql);
+		// 		$stmt->execute();
 
-				$response = $stmt->fetchAll();
-				return $response;
+		// 		$response = $stmt->fetchAll();
+		// 		return $response;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
-		/*///////////////////////////////////////
-			Cargar atenciones cliente
-		//////////////////////////////////////*/
-		public function cargar_atenciones_cli($id_cita) {
+		// /*///////////////////////////////////////
+		// 	Cargar atenciones cliente
+		// //////////////////////////////////////*/
+		// public function cargar_atenciones_cli($id_cita) {
 
-			try{
+		// 	try{
 				
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
 
-				$sql = "select b.nom_cli, a.fec_cita, e.nom_estilista, ubi.desc_item ubi, a.obs_age, e.color_estilista
-						from citas a, clientes b, parametros ubi, estilistas e
-						where  a.id_cli = b.id_cli
-						and a.estado_cita =  3
-						and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
-						and a.id_estilista = e.id_estilista and b.id_cli = (select id_cli from citas where id_cita = ".$id_cita." )
-						order by a.fec_cita";
+		// 		$sql = "select b.nom_cli, a.fec_cita, e.nom_estilista, ubi.desc_item ubi, a.obs_age, e.color_estilista
+		// 				from citas a, clientes b, parametros ubi, estilistas e
+		// 				where  a.id_cli = b.id_cli
+		// 				and a.estado_cita =  3
+		// 				and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
+		// 				and a.id_estilista = e.id_estilista and b.id_cli = (select id_cli from citas where id_cita = ".$id_cita." )
+		// 				order by a.fec_cita";
 				
 
-				$stmt = $pdo->prepare($sql);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql);
+		// 		$stmt->execute();
 
-				$response = $stmt->fetchAll();
-				return $response;
+		// 		$response = $stmt->fetchAll();
+		// 		return $response;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 
@@ -182,61 +182,61 @@
 
 
 
-		/*///////////////////////////////////////
-			Definir color de estado
-		//////////////////////////////////////*/
-		public function colorestado($estado) {
+		// /*///////////////////////////////////////
+		// 	Definir color de estado
+		// //////////////////////////////////////*/
+		// public function colorestado($estado) {
 
-			try{
+		// 	try{
 				
-				if ($estado == "Agendada"){
-					$est = '<td style="background:#FE2E2E ; color:#FFFFFF">'.$estado.'</td> ';
-				}else if ($estado == "Confirmada"){
-					$est = '<td style="background:#DBA901 ; color:#FFFFFF">'.$estado.'</td> ';
-				}else if ($estado == "Atendida"){
-					$est = '<td style="background:#0B610B ; color:#FFFFFF">'.$estado.'</td> ';
-				}else if ($estado == "Anulada"){
-					$est = '<td style="background:#0B243B ; color:#FFFFFF">'.$estado.'</td> ';
-				}else {
-					$est = '<td>'.$estado.'</td> ';
-						}
-				return $est;
+		// 		if ($estado == "Agendada"){
+		// 			$est = '<td style="background:#FE2E2E ; color:#FFFFFF">'.$estado.'</td> ';
+		// 		}else if ($estado == "Confirmada"){
+		// 			$est = '<td style="background:#DBA901 ; color:#FFFFFF">'.$estado.'</td> ';
+		// 		}else if ($estado == "Atendida"){
+		// 			$est = '<td style="background:#0B610B ; color:#FFFFFF">'.$estado.'</td> ';
+		// 		}else if ($estado == "Anulada"){
+		// 			$est = '<td style="background:#0B243B ; color:#FFFFFF">'.$estado.'</td> ';
+		// 		}else {
+		// 			$est = '<td>'.$estado.'</td> ';
+		// 				}
+		// 		return $est;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 
-		/*///////////////////////////////////////
-			Cargar citas estilista
-		//////////////////////////////////////*/
-		public function cargar_citas_est($us, $dia) {
+		// /*///////////////////////////////////////
+		// 	Cargar citas estilista
+		// //////////////////////////////////////*/
+		// public function cargar_citas_est($us, $dia) {
 
-			try{
+		// 	try{
 				
 				
-				$pdo = AccesoDB::getCon();
+		// 		$pdo = AccesoDB::getCon();
 
 
-				$sql = "select a.id_cita, b.nom_cli, b.fono_cli, a.hora_cita, a.hora_ter, est.desc_item est, ubi.desc_item ubi
-						from citas a, clientes b, parametros ubi, parametros est
-						where  a.id_cli = b.id_cli
-						and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
-						and a.estado_cita = est.cod_item and est.cod_grupo = 2 and est.vigencia = 1
-						and a.id_estilista = ".$us." and a.fec_cita = '".$dia."' order by hora_cita";
+		// 		$sql = "select a.id_cita, b.nom_cli, b.fono_cli, a.hora_cita, a.hora_ter, est.desc_item est, ubi.desc_item ubi
+		// 				from citas a, clientes b, parametros ubi, parametros est
+		// 				where  a.id_cli = b.id_cli
+		// 				and a.ubicacion_age = ubi.cod_item and ubi.cod_grupo = 1 and ubi.vigencia = 1
+		// 				and a.estado_cita = est.cod_item and est.cod_grupo = 2 and est.vigencia = 1
+		// 				and a.id_estilista = ".$us." and a.fec_cita = '".$dia."' order by hora_cita";
 
-				$stmt = $pdo->prepare($sql);
-				$stmt->execute();
+		// 		$stmt = $pdo->prepare($sql);
+		// 		$stmt->execute();
 
-				$response = $stmt->fetchAll();
-				return $response;
+		// 		$response = $stmt->fetchAll();
+		// 		return $response;
 
-			} catch (Exception $e) {
-				throw $e;
-			}
-		}
+		// 	} catch (Exception $e) {
+		// 		throw $e;
+		// 	}
+		// }
 
 
 

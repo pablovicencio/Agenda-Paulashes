@@ -112,7 +112,7 @@ function agregar_cita(fec_cit,cli,hora_ini,hora_ter,ubi,nom){
 
 <body>
 <div id="header">
-<center><img src="../img/banner.jpg" width="1180" height="148"/></center> 
+<center><img src="../img/banner.jpg" width="100%" height="10%"/></center> 
 </div><br>
 
 
