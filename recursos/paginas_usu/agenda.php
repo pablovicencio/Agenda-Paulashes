@@ -45,7 +45,7 @@ function modal(fec,nom) {
     $("#horas tbody tr").remove(); 
     document.getElementById('fec_cit').innerHTML = fec;
     document.getElementById('nom_usu').innerHTML = nom;
-    document.getElementById('nom').innerHTML = nom;
+    //document.getElementById('nom').innerHTML = nom;
 
      $.ajax({
       url: '../controles/control_horasAgenda.php',
@@ -262,8 +262,9 @@ function agregar_cita(fec_cit,cli,hora_ini,hora_ter,ubi,nom){
 
          <label>Estilista:</label>
 
-        <?php if ($_SESSION['perfil'] == 1) {
-          echo '<span id="nom"></span>';
+        <?php 
+        if ($_SESSION['perfil'] == 1) {
+          echo '<span id="nom">'.$_SESSION['nombre'].'</span>';
         }else{
           echo ' <select name="nom" size="1" class="form-control" id="nom" type="text" required> 
           <option  value="" selected disabled>Seleccione Estilista</option> ';
